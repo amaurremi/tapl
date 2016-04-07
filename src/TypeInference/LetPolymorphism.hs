@@ -15,7 +15,7 @@ import Data.List (splitAt)
 -- all cases for this function, except CT-VAR and CT-LET, are analogous to the typeCheck function in `SimpleTypeInference`
 typeCheck :: Г -> Fresh -> Term -> Maybe (Type, Constraint, Fresh)
 -- (CT-VAR)
-typeCheck env fs (Var x)               = do
+typeCheck env fs (Var x)            = do
     tpe <- x `lookup` env
     let (sTpe, sFs) = removeScheme tpe fs
     return (sTpe, [], sFs)
