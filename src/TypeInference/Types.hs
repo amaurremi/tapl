@@ -29,7 +29,7 @@ data Term = Var VarName
 
 instance Show Term where
     show Zero                  = "0"
-    show (Lambda x tpe term)   = "λ" ++ x ++ " : " ++ show tpe ++ " . " ++ show term
+    show (Lambda x tpe term)   = "λ" ++ x ++ ": " ++ show tpe ++ " . " ++ show term
     show (App t1 t2)           = "(" ++ show t1 ++ ") (" ++ show t2 ++ ")"
     show (Boolean b)           = show b
     show (Succ t)              = "1 + " ++ show t
@@ -37,6 +37,7 @@ instance Show Term where
     show (IsZero t)            = "zero? " ++ show t
     show (IfThenElse t1 t2 t3) = "if (" ++ show t1 ++ ") then " ++ show t2 ++ " else " ++ show t3
     show (Var x)               = x
+    show (Let x t body)        = "let " ++ x ++ " = " ++ show t ++ " in " ++ show body
 
 type Constraint = [(Type, Type)]
 

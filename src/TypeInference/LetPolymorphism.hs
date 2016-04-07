@@ -25,6 +25,7 @@ typeCheck env fs (Var x)               = do
                     makeType        = map TyId
                     noSchemeType    = substConstraintType t $ zip (makeType ids) $ makeType freshIds
                 in (noSchemeType, fs')
+              removeScheme t fs                 = (t, fs)
 -- (CT-ABS)
 typeCheck env fs (Lambda x tpe1 body)  = do
     (tpe2, c, fs) <- typeCheck ((x, tpe1) : env) fs body
