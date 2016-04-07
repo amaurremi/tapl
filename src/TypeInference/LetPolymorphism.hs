@@ -12,7 +12,7 @@ import Data.List (splitAt)
 -- Type Checking and Constraint Generation
 
 -- todo wrap fresh variables in State monad
--- all cases for this function, except the `let` case, are analogous to the typeCheck function in `SimpleTypeInference`
+-- all cases for this function, except CT-VAR and CT-LET, are analogous to the typeCheck function in `SimpleTypeInference`
 typeCheck :: Г -> Fresh -> Term -> Maybe (Type, Constraint, Fresh)
 -- (CT-VAR)
 typeCheck env fs (Var x)               = do
@@ -56,6 +56,7 @@ typeCheck env fs (IfThenElse t1 t2 t3) = do
     (tpe2, c2, fs2) <- typeCheck env fs1 t2
     (tpe3, c3, fs3) <- typeCheck env fs2 t3
     return (tpe2, (tpe1, TyBool) : (tpe2, tpe3) : c1 ++ c2 ++ c3, fs3)
+-- (CT-LET)
 typeCheck env fs (Let x t body) = do
     -- calculate a type and set of associated constraints for the right-hand side `t`
     (tpe, c, fs1) <- typeCheck env fs t
