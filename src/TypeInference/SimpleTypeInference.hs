@@ -2,7 +2,7 @@
 -- Constraint-Based Type Inference Algorithm Described in Chapter 22 --
 -----------------------------------------------------------------------
 
-module SimpleTypeInference where
+module SimpleTypeInference (typeCheck) where
 
 import Types
 import Test

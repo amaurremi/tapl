@@ -4,6 +4,7 @@ data Type = TyBool
           | TyNat
           | TyArr Type Type
           | TyId Id
+          | Scheme TypeScheme   -- used for let polymorphism
           deriving Eq
 
 instance Show Type where
@@ -11,6 +12,9 @@ instance Show Type where
     show TyNat  = "nat"
     show (TyArr t1 t2) = "(" ++ show t1 ++ " -> " ++ show t2 ++ ")"
     show (TyId n) = "X" ++ show n
+    show (Scheme (ids, t)) = "∀ " ++ unwords (map show ids) ++ " . " ++ show t
+
+type TypeScheme = ([Id], Type)
 
 data Term = Var VarName
           | Lambda VarName Type Term

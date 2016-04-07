@@ -13,17 +13,9 @@ test exp typeCheck = case typeCheck [] [4,5..] exp of
                 putStrLn $ "return type: " ++ show ret
                 putStrLn $ "constraints:\n" ++ showConstraints constraints
                 putStrLn $ "unified:\n" ++ showConstraints unified
-                putStrLn $ "typed expression: " ++ (show $ typedExpression exp unified)
+                putStrLn $ "typed expression: " ++ (show $ substConstraintTerm exp unified)
             Nothing                    ->
                 putStrLn "type error"
-
-    where typedExpression :: Term -> Constraint -> Term
-          typedExpression = foldl (\term (s, t) -> substExpTpe s t term)
-
-          substExpTpe :: Type -> Type -> Term -> Term
-          substExpTpe (TyId x) t term = substExp x t term
-          substExpTpe t (TyId x) term = substExp x t term
-          substExpTpe _ _ _           = error "wrong unification result"
 
 -- Test expressions
 
