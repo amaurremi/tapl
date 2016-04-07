@@ -45,6 +45,7 @@ typeCheck env fs (IfThenElse t1 t2 t3) = do
     (tpe2, c2, fs2) <- typeCheck env fs1 t2
     (tpe3, c3, fs3) <- typeCheck env fs2 t3
     return (tpe2, (tpe1, TyBool) : (tpe2, tpe3) : c1 ++ c2 ++ c3, fs3)
+-- (CT-LET)
 typeCheck env fs (Let x t body) = do
     (tpe1, c1, fs1) <- typeCheck env fs t
     (tpe2, c2, fs2) <- typeCheck ((x, tpe1) : env) fs1 body
