@@ -49,7 +49,7 @@ typeCheck env fs (IfThenElse t1 t2 t3) = do
 typeCheck env fs (Let x t body) = do
     (tpe1, c1, fs1) <- typeCheck env fs t
     (tpe2, c2, fs2) <- typeCheck ((x, tpe1) : env) fs1 body
-    return (tpe2, [], fs2)
+    return (tpe2, c1 ++ c2, fs2)
 
 succPred :: Г -> [Int] -> Term -> Maybe (Type, Constraint, Fresh)
 succPred env fs t1 = do
