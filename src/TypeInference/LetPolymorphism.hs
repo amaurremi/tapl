@@ -70,7 +70,7 @@ typeCheck env fs (Let x t body) = do
         typeScheme    = (generalize principalType principalEnv, principalType)
         extendedEnv   = (x, Scheme typeScheme) : principalEnv
     (tpe2, c2, fs2) <- typeCheck extendedEnv fs1 body
-    return (tpe2, [], fs2)
+    return (tpe2, sigma ++ c2, fs2)
 
 generalize :: Type -> Г -> [Id]
 generalize t@(TyId id) env   = if mentioned id env then [] else [id]
@@ -82,8 +82,8 @@ mentioned :: Id -> Г -> Bool
 mentioned id = any (elem id . fv) . map snd
 
 succPred :: Г -> [Int] -> Term -> Maybe (Type, Constraint, Fresh)
-succPred env fs t1 = do
-  (tpe, cs, fs') <- typeCheck env fs t1
+succPred env fs t = do
+  (tpe, cs, fs') <- typeCheck env fs t
   return (TyNat, (tpe, TyNat) : cs, fs')
 
 main = test testExp1 typeCheck
